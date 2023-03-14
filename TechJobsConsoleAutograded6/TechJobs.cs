@@ -133,12 +133,32 @@ namespace TechJobsConsoleAutograded6
         }
 
         // TODO: complete the PrintJobs method.
+
+        
         public void PrintJobs(List<Dictionary<string, string>> someJobs)
 
-        {
+        { foreach (Dictionary<string, string> job in someJobs)
+
+            { foreach (KeyValuePair<string, string> jobs in job)
+                {
+                    Console.WriteLine(jobs.Key + ": " + jobs.Value);
+                }
+
+                //Console.WriteLine(job);
+               //Console.WriteLine(Environment.NewLine + "*****" +        + Environment.NewLine + "*****");
+            }
+
+
+
+        //Console.WriteLine(Environment.NewLine + "*****" + JobData.FindAll() + Environment.NewLine + "*****");
             
-            {
-                Console.WriteLine(Environment.NewLine + "*****" + someJobs + "*****");
+                //Console.WriteLine(Environment.NewLine + "*****" + 
+                //    Environment.NewLine + "position type: " + someJobs. + 
+                //    Environment.NewLine + "name: " +          +
+                //    Environment.NewLine + "employer: " +    +
+                //    Environment.NewLine + "location: " +        +
+                //    Environment.NewLine + "core competency: "     +
+                //   Environment.NewLine + "*****");
             }
 
 
@@ -154,5 +174,5 @@ namespace TechJobsConsoleAutograded6
             //Console.WriteLine("PrintJobs is not implemented yet");
         }
     }
-}
+
 
