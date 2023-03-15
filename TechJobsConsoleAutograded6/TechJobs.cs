@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace TechJobsConsoleAutograded6
 {
@@ -134,18 +137,29 @@ namespace TechJobsConsoleAutograded6
 
         // TODO: complete the PrintJobs method.
 
-        
+
         public void PrintJobs(List<Dictionary<string, string>> someJobs)
 
-        { foreach (Dictionary<string, string> job in someJobs)
+        { foreach (Dictionary<string, string> job in someJobs) 
 
-            { foreach (KeyValuePair<string, string> jobs in job)
+            {
+                foreach (KeyValuePair<string, string> jobs in job) 
                 {
-                    Console.WriteLine(jobs.Key + ": " + jobs.Value);
-                }
+                    string oneJob = (jobs.Key + ": " + jobs.Value);
+                    Console.WriteLine(oneJob);
 
-                //Console.WriteLine(job);
-               //Console.WriteLine(Environment.NewLine + "*****" +        + Environment.NewLine + "*****");
+                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+
+                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+
+                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+                }
+            }
+        
+        //else
+        //        {
+        //            Console.WriteLine("No results");
+        //        }
             }
 
 
