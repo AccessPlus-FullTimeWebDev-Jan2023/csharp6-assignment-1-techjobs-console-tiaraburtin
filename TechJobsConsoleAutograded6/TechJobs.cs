@@ -5,8 +5,8 @@ using static System.Reflection.Metadata.BlobBuilder;
 
 namespace TechJobsConsoleAutograded6
 {
-	public class TechJobs
-	{
+    public class TechJobs
+    {
         public void RunProgram()
         {
             // Create two Dictionary vars to hold info for menu and data
@@ -67,7 +67,8 @@ namespace TechJobsConsoleAutograded6
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        List<Dictionary<string, string>> searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -140,53 +141,30 @@ namespace TechJobsConsoleAutograded6
 
         public void PrintJobs(List<Dictionary<string, string>> someJobs)
 
-        { foreach (Dictionary<string, string> job in someJobs) 
-
+        {
+            if (someJobs.Count() > 0)
             {
-                foreach (KeyValuePair<string, string> jobs in job) 
+                foreach (Dictionary<string, string> job in someJobs)
+
                 {
-                    string oneJob = (jobs.Key + ": " + jobs.Value);
-                    Console.WriteLine(oneJob);
+                    Console.Write(Environment.NewLine + "*****" + Environment.NewLine);
 
-                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+                    foreach (KeyValuePair<string, string> jobs in job)
+                    {
 
-                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+                        Console.WriteLine(jobs.Key + ": " + jobs.Value);
 
-                    //Console.WriteLine("*****" + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + jobs.Key + ": " + jobs.Value + Environment.NewLine + "*****");
+                        //Console.WriteLine("PrintJobs is not implemented yet");
+                    }
+
+                    Console.Write("*****" + Environment.NewLine);
                 }
             }
-        
-        //else
-        //        {
-        //            Console.WriteLine("No results");
-        //        }
+            else
+            {
+                Console.WriteLine("No results");
             }
-
-
-
-        //Console.WriteLine(Environment.NewLine + "*****" + JobData.FindAll() + Environment.NewLine + "*****");
-            
-                //Console.WriteLine(Environment.NewLine + "*****" + 
-                //    Environment.NewLine + "position type: " + someJobs. + 
-                //    Environment.NewLine + "name: " +          +
-                //    Environment.NewLine + "employer: " +    +
-                //    Environment.NewLine + "location: " +        +
-                //    Environment.NewLine + "core competency: "     +
-                //   Environment.NewLine + "*****");
-            }
-
-
-
-
-                //if a word is searched, for loop through every dictionary in JobData to search for the value and print 
-
-
-
-                //if a word is NOT found, print what is below
-
-            //    if (
-            //Console.WriteLine("PrintJobs is not implemented yet");
         }
     }
-
+}
 
