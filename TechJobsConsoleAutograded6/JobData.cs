@@ -3,8 +3,8 @@ using System.Text;
 
 namespace TechJobsConsoleAutograded6
 {
-	public class JobData
-	{
+    public class JobData
+    {
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
 
@@ -47,118 +47,134 @@ namespace TechJobsConsoleAutograded6
             // load data, if not already loaded
             LoadData();
 
-            return null;
-        }
-
-        /**
-         * Returns results of search the jobs data by key/value, using
-         * inclusion of the search term.
-         *
-         * For example, searching for employer "Enterprise" will include results
-         * with "Enterprise Holdings, Inc".
-         */
-        public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
-        {
-            // load data, if not already loaded
-            LoadData();
-
             List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
-
-
-                //TODO: Make search case-insensitive
-                if (aValue.Contains(value))
+                foreach (KeyValuePair<string, string> cell in row)
                 {
-                    jobs.Add(row);
+                    string aValue = row[cell.Key];
+                    if (aValue.ToLower().Contains(value.ToLower()))
+                    {
+                        jobs.Add(row);
+                        continue;
+                    }
+
                 }
             }
-
             return jobs;
         }
+    
 
-        /*
-         * Load and parse data from job_data.csv
-         */
-        private static void LoadData()
+    /**
+     * Returns results of search the jobs data by key/value, using
+     * inclusion of the search term.
+     *
+     * For example, searching for employer "Enterprise" will include results
+     * with "Enterprise Holdings, Inc".
+     */
+    public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
+    {
+        // load data, if not already loaded
+        LoadData();
+
+        List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+        foreach (Dictionary<string, string> row in AllJobs)
         {
+            string aValue = row[column];
 
-            if (IsDataLoaded)
+
+            if (aValue.ToLower().Contains(value.ToLower()))
             {
-                return;
+                jobs.Add(row);
             }
-
-            List<string[]> rows = new List<string[]>();
-
-            using (StreamReader reader = File.OpenText("job_data.csv"))
-            {
-                while (reader.Peek() >= 0)
-                {
-                    string line = reader.ReadLine();
-                    string[] rowArrray = CSVRowToStringArray(line);
-                    if (rowArrray.Length > 0)
-                    {
-                        rows.Add(rowArrray);
-                    }
-                }
-            }
-
-            string[] headers = rows[0];
-            rows.Remove(headers);
-
-            // Parse each row array into a more friendly Dictionary
-            foreach (string[] row in rows)
-            {
-                Dictionary<string, string> rowDict = new Dictionary<string, string>();
-
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    rowDict.Add(headers[i], row[i]);
-                }
-                AllJobs.Add(rowDict);
-            }
-
-            IsDataLoaded = true;
         }
 
-        /*
-         * Parse a single line of a CSV file into a string array
-         */
-        private static string[] CSVRowToStringArray(string row, char fieldSeparator = ',', char stringSeparator = '\"')
-        {
-            bool isBetweenQuotes = false;
-            StringBuilder valueBuilder = new StringBuilder();
-            List<string> rowValues = new List<string>();
+        return jobs;
+    }
 
-            // Loop through the row string one char at a time
-            foreach (char c in row.ToCharArray())
+    /*
+     * Load and parse data from job_data.csv
+     */
+    private static void LoadData()
+    {
+
+        if (IsDataLoaded)
+        {
+            return;
+        }
+
+        List<string[]> rows = new List<string[]>();
+
+        using (StreamReader reader = File.OpenText("job_data.csv"))
+        {
+            while (reader.Peek() >= 0)
             {
-                if ((c == fieldSeparator && !isBetweenQuotes))
+                string line = reader.ReadLine();
+                string[] rowArrray = CSVRowToStringArray(line);
+                if (rowArrray.Length > 0)
                 {
-                    rowValues.Add(valueBuilder.ToString());
-                    valueBuilder.Clear();
+                    rows.Add(rowArrray);
+                }
+            }
+        }
+
+        string[] headers = rows[0];
+        rows.Remove(headers);
+
+        // Parse each row array into a more friendly Dictionary
+        foreach (string[] row in rows)
+        {
+            Dictionary<string, string> rowDict = new Dictionary<string, string>();
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                rowDict.Add(headers[i], row[i]);
+            }
+            AllJobs.Add(rowDict);
+        }
+
+        IsDataLoaded = true;
+    }
+
+    /*
+     * Parse a single line of a CSV file into a string array
+     */
+    private static string[] CSVRowToStringArray(string row, char fieldSeparator = ',', char stringSeparator = '\"')
+    {
+        bool isBetweenQuotes = false;
+        StringBuilder valueBuilder = new StringBuilder();
+        List<string> rowValues = new List<string>();
+
+        // Loop through the row string one char at a time
+        foreach (char c in row.ToCharArray())
+        {
+            if ((c == fieldSeparator && !isBetweenQuotes))
+            {
+                rowValues.Add(valueBuilder.ToString());
+                valueBuilder.Clear();
+            }
+            else
+            {
+                if (c == stringSeparator)
+                {
+                    isBetweenQuotes = !isBetweenQuotes;
                 }
                 else
                 {
-                    if (c == stringSeparator)
-                    {
-                        isBetweenQuotes = !isBetweenQuotes;
-                    }
-                    else
-                    {
-                        valueBuilder.Append(c);
-                    }
+                    valueBuilder.Append(c);
                 }
             }
-
-            // Add the final value
-            rowValues.Add(valueBuilder.ToString());
-            valueBuilder.Clear();
-
-            return rowValues.ToArray();
         }
+
+        // Add the final value
+        rowValues.Add(valueBuilder.ToString());
+        valueBuilder.Clear();
+
+        return rowValues.ToArray();
     }
 }
+}
+
 

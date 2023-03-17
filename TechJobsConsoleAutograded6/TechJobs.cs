@@ -1,9 +1,12 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace TechJobsConsoleAutograded6
 {
-	public class TechJobs
-	{
+    public class TechJobs
+    {
         public void RunProgram()
         {
             // Create two Dictionary vars to hold info for menu and data
@@ -64,7 +67,8 @@ namespace TechJobsConsoleAutograded6
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        List<Dictionary<string, string>> searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -133,9 +137,33 @@ namespace TechJobsConsoleAutograded6
         }
 
         // TODO: complete the PrintJobs method.
+
+
         public void PrintJobs(List<Dictionary<string, string>> someJobs)
+
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+            if (someJobs.Count() > 0)
+            {
+                foreach (Dictionary<string, string> job in someJobs)
+
+                {
+                    Console.Write(Environment.NewLine + "*****" + Environment.NewLine);
+
+                    foreach (KeyValuePair<string, string> jobs in job)
+                    {
+
+                        Console.WriteLine(jobs.Key + ": " + jobs.Value);
+
+                        //Console.WriteLine("PrintJobs is not implemented yet");
+                    }
+
+                    Console.Write("*****" + Environment.NewLine);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No results");
+            }
         }
     }
 }
